@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play } from "lucide-react"
+import { useState } from "react"
 
 export function Hero() {
+  const [iframeError, setIframeError] = useState(false)
+
   return (
     <section className="relative bg-background pt-16 pb-24 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,19 +88,34 @@ export function Hero() {
                 </div>
               </div>
 
-              {/* Live Embedded Form */}
-              <div className="relative rounded-xl overflow-hidden bg-background">
-                <iframe
-                  src="https://app.leadtella.com/embed/form/89?primaryColor=%233b82f6&secondaryColor=%2364748b&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%233b82f6&buttonTextColor=%23ffffff&showBranding=true"
-                  width="100%"
-                  height="500"
-                  frameBorder="0"
-                  className="w-full"
-                  title="LeadTella Demo Form"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                />
+              <div className="relative rounded-xl overflow-hidden bg-background min-h-[500px]">
+                {!iframeError ? (
+                  <iframe
+                    src="https://app.leadtella.com/embed/form/89?primaryColor=%233b82f6&secondaryColor=%2364748b&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%233b82f6&buttonTextColor=%23ffffff&showBranding=true"
+                    width="100%"
+                    height="500"
+                    style={{ border: "none", display: "block" }}
+                    title="LeadTella Demo Form"
+                    onLoad={() => {
+                      console.log("[v0] Iframe loaded successfully")
+                    }}
+                    onError={(e) => {
+                      console.log("[v0] Iframe failed to load", e)
+                      setIframeError(true)
+                    }}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-[500px] bg-secondary/20 rounded-xl">
+                    <p className="text-muted-foreground mb-4">Unable to load embedded form</p>
+                    <a
+                      href="https://app.leadtella.com/embed/form/89?primaryColor=%233b82f6&secondaryColor=%2364748b&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%233b82f6&buttonTextColor=%23ffffff&showBranding=true"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button>Open Form in New Tab</Button>
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* Optional: "Try it live" indicator */}
