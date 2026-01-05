@@ -1,3 +1,5 @@
+"use client"
+
 interface SchemaMarkupProps {
   schema: object | object[]
 }

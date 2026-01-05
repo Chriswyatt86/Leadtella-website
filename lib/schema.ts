@@ -1,27 +1,13 @@
-import { SITE_URL } from "./constants"
-
-export interface SchemaProps {
-  title: string
-  description: string
-  url: string
-  image?: string
-  datePublished?: string
-  dateModified?: string
-  author?: {
-    name: string
-    url?: string
-  }
-}
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "./constants"
 
 export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Leadtella",
+    name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.png`,
-    description:
-      "AI-powered lead generation platform that helps businesses convert website visitors into qualified leads through intelligent quizzes and forms.",
+    description: SITE_DESCRIPTION,
     sameAs: ["https://twitter.com/leadtella", "https://linkedin.com/company/leadtella"],
     contactPoint: {
       "@type": "ContactPoint",
@@ -36,7 +22,7 @@ export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Leadtella",
+    name: SITE_NAME,
     url: SITE_URL,
     description: "AI-powered lead generation platform for B2B businesses",
     potentialAction: {
@@ -50,56 +36,23 @@ export function generateWebSiteSchema() {
   }
 }
 
-export function generateWebPageSchema(props: SchemaProps) {
+export function generateWebPageSchema(title: string, description: string, url: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: props.title,
-    description: props.description,
-    url: props.url,
+    name: title,
+    description,
+    url,
     inLanguage: "en-US",
     isPartOf: {
       "@type": "WebSite",
       url: SITE_URL,
-      name: "Leadtella",
+      name: SITE_NAME,
     },
-    ...(props.image && { image: props.image }),
   }
 }
 
-export function generateArticleSchema(props: SchemaProps & { category?: string }) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: props.title,
-    description: props.description,
-    url: props.url,
-    datePublished: props.datePublished,
-    dateModified: props.dateModified || props.datePublished,
-    author: {
-      "@type": "Person",
-      name: props.author?.name || "Leadtella Team",
-      url: props.author?.url || SITE_URL,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Leadtella",
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/favicon.png`,
-      },
-    },
-    image: props.image || `${SITE_URL}/og-image.png`,
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": props.url,
-    },
-    inLanguage: "en-US",
-    ...(props.category && { articleSection: props.category }),
-  }
-}
-
-export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
+export function generateBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -112,11 +65,11 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
   }
 }
 
-export function generateSoftwareSchema() {
+export function generateSoftwareApplicationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Leadtella",
+    name: SITE_NAME,
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web Browser",
     offers: {
@@ -132,22 +85,93 @@ export function generateSoftwareSchema() {
       bestRating: "5",
       worstRating: "1",
     },
-    description:
-      "AI-powered lead generation platform that helps businesses convert website visitors into qualified leads through intelligent quizzes and forms.",
+    description: SITE_DESCRIPTION,
   }
 }
 
-export function generateFAQSchema(faqs: { question: string; answer: string }[]) {
+export function generateProductSchema(product: {
+  name: string
+  description: string
+  price: string
+  currency: string
+  features: string[]
+}) {
   return {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: product.currency,
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/pricing`,
+    },
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
+    },
   }
 }
+
+export function generateBlogPostSchema(post: {
+  title: string
+  description: string
+  url: string
+  publishedAt: string
+  author: {
+    name: string
+    url?: string
+  }
+  image?: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    url: post.url,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: {
+      "@type": "Person",
+      name: post.author.name,
+      url: post.author.url || SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/favicon.png`,
+      },
+    },
+    image: post.image || `${SITE_URL}/favicon.png`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": post.url,
+    },
+  }
+}
+
+export function generateBlogSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: `${SITE_NAME} Blog`,
+    description: "Latest insights on lead generation, quiz marketing, and conversion optimization",
+    url: `${SITE_URL}/blog`,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/favicon.png`,
+      },
+    },
+  }
+}
+
+export const generateSoftwareSchema = generateSoftwareApplicationSchema
+export const generateArticleSchema = generateBlogPostSchema
