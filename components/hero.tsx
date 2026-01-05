@@ -95,6 +95,8 @@ export function Hero() {
                   className="w-full"
                   title="LeadTella Demo Form"
                   loading="lazy"
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 />
               </div>
 
