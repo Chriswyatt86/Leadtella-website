@@ -1,12 +1,16 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CookieScanner } from "@/components/cookie-scanner"
+import { SITE_URL } from "@/lib/constants"
 
 export const metadata = {
   title: "Cookie Scanner - Leadtella | Analyze Website Cookies & Privacy Compliance",
   description:
     "Scan your website for cookies and tracking technologies. Ensure GDPR compliance and understand what data is being collected from your visitors.",
   keywords: "cookie scanner, GDPR compliance, website privacy audit, cookie analysis, privacy compliance tool",
+  alternates: {
+    canonical: `${SITE_URL}/cookie-scanner`,
+  },
   openGraph: {
     title: "Leadtella Cookie Scanner - Website Privacy Analysis",
     description: "Scan your website for cookies and ensure GDPR compliance with our free privacy audit tool.",

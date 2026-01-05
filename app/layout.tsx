@@ -4,6 +4,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { CookieConsent } from "@/components/cookie-consent"
 import { ErrorBoundary } from "@/components/error-boundary"
+import { SchemaMarkup } from "@/components/schema-markup"
+import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/schema"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -50,6 +52,8 @@ export default function RootLayout({
         <meta httpEquiv="X-Frame-Options" content="DENY" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+        <SchemaMarkup schema={[generateOrganizationSchema(), generateWebSiteSchema()]} />
 
         {/* Google Analytics - Global Site Tag (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-GERZ7GPQ56"></script>

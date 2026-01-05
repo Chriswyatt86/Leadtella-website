@@ -1,11 +1,15 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { SITE_URL } from "@/lib/constants"
 
 export const metadata = {
   title: "Terms and Conditions - Leadtella | Service Agreement & User Terms",
   description:
     "Read Leadtella's terms of service, including pricing policies, refund guarantees, and user agreements for our AI quiz builder platform.",
   keywords: "terms of service, user agreement, leadtella terms, service conditions, pricing policy",
+  alternates: {
+    canonical: `${SITE_URL}/terms`,
+  },
   openGraph: {
     title: "Leadtella Terms and Conditions - Service Agreement",
     description: "Read our terms of service, pricing policies, and user agreements for the AI quiz builder platform.",

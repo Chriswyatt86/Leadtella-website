@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer"
 import { TagPage } from "@/components/blog/tag-page"
 import { tags, blogPosts } from "@/data/blog-data"
 import { notFound } from "next/navigation"
+import { SITE_URL } from "@/lib/constants"
 
 interface TagPageProps {
   params: {
@@ -42,6 +43,9 @@ export async function generateMetadata({ params }: TagPageProps) {
     title: shortTitle,
     description: `Explore ${tagPosts.length} articles about ${tag.name.toLowerCase()}. Learn the latest strategies and best practices for ${tag.name.toLowerCase()} in lead generation and marketing.`,
     keywords: `${tag.name.toLowerCase()}, ${tag.slug}, lead generation, quiz marketing`,
+    alternates: {
+      canonical: `${SITE_URL}/blog/tag/${tag.slug}`,
+    },
     openGraph: {
       title: shortTitle,
       description: `Expert tips and strategies for ${tag.name.toLowerCase()} in lead generation and marketing.`,

@@ -3,6 +3,9 @@ import { Footer } from "@/components/footer"
 import { BlogPostContent } from "@/components/blog/blog-post-content"
 import { getPostBySlug, getAllPosts } from "@/lib/sanity"
 import { notFound } from "next/navigation"
+import { SITE_URL } from "@/lib/constants"
+import { SchemaMarkup } from "@/components/schema-markup"
+import { generateArticleSchema, generateBreadcrumbSchema } from "@/lib/schema"
 
 interface BlogPostPageProps {
   params: {
@@ -26,6 +29,9 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     title: shortTitle,
     description: sanityPost.excerpt,
     keywords: sanityPost.categories?.join(", ") || "lead generation, quiz marketing",
+    alternates: {
+      canonical: `${SITE_URL}/blog/${sanityPost.slug.current}`,
+    },
     openGraph: {
       title: shortTitle,
       description: sanityPost.excerpt,
@@ -74,8 +80,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     content: sanityPost.content || [],
   }
 
+  const schemas = [
+    generateArticleSchema({
+      title: post.title,
+      description: post.excerpt,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      image: post.coverImage,
+      datePublished: post.publishedAt,
+      dateModified: post.publishedAt,
+      author: {
+        name: post.author.name,
+        url: post.author.website || `${SITE_URL}/blog/author/${post.author.slug}`,
+      },
+      category: post.tags[0]?.name,
+    }),
+    generateBreadcrumbSchema([
+      { name: "Home", url: SITE_URL },
+      { name: "Blog", url: `${SITE_URL}/blog` },
+      { name: post.title, url: `${SITE_URL}/blog/${post.slug}` },
+    ]),
+  ]
+
   return (
     <div className="min-h-screen bg-white">
+      <SchemaMarkup schema={schemas} />
       <Header />
       <BlogPostContent post={post} />
       <Footer />

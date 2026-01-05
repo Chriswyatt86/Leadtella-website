@@ -1,11 +1,15 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { SITE_URL } from "@/lib/constants"
 
 export const metadata = {
   title: "Privacy Policy - Leadtella | Data Protection & Privacy Rights",
   description:
     "Learn how Leadtella protects your privacy and personal data. Our comprehensive privacy policy covers data collection, usage, and your rights under GDPR.",
   keywords: "privacy policy, data protection, GDPR, personal data, leadtella privacy",
+  alternates: {
+    canonical: `${SITE_URL}/privacy`,
+  },
   openGraph: {
     title: "Leadtella Privacy Policy - Data Protection & Privacy Rights",
     description: "Learn how Leadtella protects your privacy and personal data. GDPR compliant privacy policy.",

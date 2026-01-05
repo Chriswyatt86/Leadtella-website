@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer"
 import { CategoryPage } from "@/components/blog/category-page"
 import { categories, blogPosts } from "@/data/blog-data"
 import { notFound } from "next/navigation"
+import { SITE_URL } from "@/lib/constants"
 
 interface CategoryPageProps {
   params: {
@@ -38,6 +39,9 @@ export async function generateMetadata({ params }: CategoryPageProps) {
     title: shortTitle,
     description: `Discover expert ${category.name.toLowerCase()} strategies and tips. ${categoryPosts.length} articles covering the latest trends and best practices in ${category.name.toLowerCase()}.`,
     keywords: `${category.name.toLowerCase()}, lead generation, quiz marketing, ${category.slug}`,
+    alternates: {
+      canonical: `${SITE_URL}/blog/category/${category.slug}`,
+    },
     openGraph: {
       title: shortTitle,
       description: `Expert ${category.name.toLowerCase()} strategies and tips for growing your business.`,

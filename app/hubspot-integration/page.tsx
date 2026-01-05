@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { HubSpotLandingPage } from "@/components/hubspot-landing-page"
+import { SITE_URL } from "@/lib/constants"
 
 export const metadata = {
   title: "HubSpot + Leadtella: AI Quiz Integration for Better Qualified Leads",
@@ -8,6 +9,9 @@ export const metadata = {
     "Transform your HubSpot lead generation with AI-powered quizzes. Automatically sync qualified leads to your CRM and email sequences. Get 3x better conversion rates than traditional forms.",
   keywords:
     "HubSpot integration, AI quiz builder, lead generation, qualified leads, CRM integration, email marketing automation, lead scoring",
+  alternates: {
+    canonical: `${SITE_URL}/hubspot-integration`,
+  },
   openGraph: {
     title: "HubSpot + Leadtella: AI Quiz Integration for Better Qualified Leads",
     description:
