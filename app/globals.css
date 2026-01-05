@@ -1,0 +1,331 @@
+@import "tailwindcss";
+
+:root {
+  /* Semantic design tokens for LeadTella brand */
+  --background: 0 0% 100%;
+  --foreground: 220 13% 13%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 13% 13%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 13% 13%;
+  --primary: 156 72% 47%; /* #23CD9A - Brand teal */
+  --primary-foreground: 220 13% 13%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 220 13% 13%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 156 72% 47%; /* #23CD9A - Brand teal */
+  --accent-foreground: 220 13% 13%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 156 72% 47%; /* #23CD9A - Brand teal */
+  --chart-1: 156 72% 47%;
+  --chart-2: 220 90% 56%;
+  --chart-3: 173 58% 39%;
+  --chart-4: 43 96% 56%;
+  --chart-5: 27 87% 67%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 220 13% 8%;
+  --foreground: 0 0% 98%;
+  --card: 220 13% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 220 13% 12%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 156 72% 47%; /* #23CD9A - Brand teal */
+  --primary-foreground: 220 13% 8%;
+  --secondary: 220 13% 18%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 220 13% 18%;
+  --muted-foreground: 220 9% 65%;
+  --accent: 156 72% 55%; /* Slightly lighter for dark mode */
+  --accent-foreground: 220 13% 8%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 220 13% 20%;
+  --input: 220 13% 20%;
+  --ring: 156 72% 55%;
+  --chart-1: 156 72% 55%;
+  --chart-2: 220 90% 65%;
+  --chart-3: 173 58% 50%;
+  --chart-4: 43 96% 65%;
+  --chart-5: 27 87% 75%;
+}
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Beautiful Blog Content Styles */
+@layer components {
+  .blog-content {
+    @apply text-foreground leading-relaxed;
+  }
+
+  /* Heading Hierarchy with More Spacing */
+  .blog-content h1 {
+    @apply text-4xl md:text-5xl font-bold text-foreground mb-10 mt-16 leading-tight;
+    @apply border-b-4 border-secondary pb-6;
+  }
+
+  .blog-content h2 {
+    @apply text-3xl md:text-4xl font-bold text-foreground mb-8 mt-16 leading-tight;
+    @apply border-b-2 border-border pb-4;
+    @apply bg-secondary -mx-6 px-6 py-4 rounded-lg;
+  }
+
+  .blog-content h3 {
+    @apply text-2xl md:text-3xl font-semibold text-foreground mb-6 mt-14 leading-tight;
+    @apply border-l-4 border-primary pl-6;
+  }
+
+  .blog-content h4 {
+    @apply text-xl md:text-2xl font-semibold text-foreground mb-4 mt-12 leading-tight;
+    @apply text-accent;
+  }
+
+  .blog-content h5 {
+    @apply text-lg md:text-xl font-semibold text-foreground mb-3 mt-10 leading-tight;
+    @apply text-muted-foreground;
+  }
+
+  /* Paragraphs - NO MORE DROP CAPS */
+  .blog-content p {
+    @apply mb-8 text-lg leading-relaxed text-foreground;
+  }
+
+  /* More spacing between sections */
+  .blog-content > * + * {
+    @apply mt-8;
+  }
+
+  .blog-content > h2 + *,
+  .blog-content > h3 + *,
+  .blog-content > h4 + * {
+    @apply mt-6;
+  }
+
+  /* Lists with better spacing */
+  .blog-content ul {
+    @apply mb-10 space-y-4 ml-6;
+  }
+
+  .blog-content li {
+    @apply text-lg text-foreground leading-relaxed relative pl-6;
+  }
+
+  .blog-content li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: hsl(var(--accent));
+    font-weight: bold;
+  }
+
+  .blog-content ol {
+    @apply mb-10 space-y-4 ml-6 list-decimal;
+  }
+
+  .blog-content ol li::before {
+    content: none;
+  }
+
+  /* Enhanced Tables */
+  .blog-content table {
+    @apply w-full border-collapse bg-card rounded-xl shadow-lg overflow-hidden my-12;
+    @apply border border-border;
+  }
+
+  .blog-content th {
+    @apply px-6 py-4 text-left font-bold text-card-foreground bg-secondary;
+    @apply border-b-2 border-primary text-sm uppercase tracking-wide;
+  }
+
+  .blog-content td {
+    @apply px-6 py-4 text-foreground border-b border-border;
+    @apply hover:bg-secondary transition-colors;
+  }
+
+  .blog-content tr:last-child td {
+    @apply border-b-0;
+  }
+
+  /* Pricing Tables - Auto-generated */
+  .blog-content .pricing-table {
+    @apply w-full border-collapse bg-card rounded-xl shadow-lg overflow-hidden my-12;
+    @apply border border-border;
+  }
+
+  .blog-content .pricing-table th {
+    @apply px-6 py-4 text-left font-bold text-primary-foreground bg-primary;
+    @apply text-base;
+  }
+
+  .blog-content .pricing-table td {
+    @apply px-6 py-4 text-foreground border-b border-border;
+    @apply hover:bg-secondary transition-colors;
+  }
+
+  .blog-content .pricing-table .plan-name {
+    @apply font-bold text-primary text-lg;
+  }
+
+  .blog-content .pricing-table .price {
+    @apply font-bold text-2xl text-accent;
+  }
+
+  /* FAQ Accordion Styles */
+  .blog-content .faq-section {
+    @apply mt-16 mb-12;
+  }
+
+  .blog-content .faq-item {
+    @apply border border-border rounded-lg mb-4 overflow-hidden shadow-sm;
+  }
+
+  .blog-content .faq-question {
+    @apply w-full text-left px-6 py-4 bg-secondary;
+    @apply font-semibold text-foreground hover:bg-muted transition-colors;
+    @apply flex justify-between items-center cursor-pointer;
+  }
+
+  .blog-content .faq-answer {
+    @apply px-6 py-4 text-foreground bg-card border-t border-border;
+    @apply leading-relaxed;
+  }
+
+  .blog-content .faq-icon {
+    @apply text-primary font-bold text-xl;
+  }
+
+  /* Code Blocks */
+  .blog-content pre {
+    @apply bg-foreground text-background rounded-xl p-6 my-10 overflow-x-auto;
+    @apply border-l-4 border-primary;
+  }
+
+  .blog-content code {
+    @apply bg-secondary text-primary px-2 py-1 rounded text-sm font-mono;
+    @apply border border-primary;
+  }
+
+  .blog-content pre code {
+    @apply bg-transparent text-background p-0 border-0;
+  }
+
+  /* Blockquotes */
+  .blog-content blockquote {
+    @apply border-l-4 border-primary pl-6 py-4 my-10 bg-secondary rounded-r-lg;
+    @apply italic text-foreground text-lg;
+  }
+
+  /* Links */
+  .blog-content a {
+    @apply text-primary hover:text-accent underline decoration-primary;
+    @apply hover:decoration-accent transition-colors;
+  }
+
+  /* Strong/Bold */
+  .blog-content strong {
+    @apply font-bold text-foreground;
+  }
+
+  /* Emphasis/Italic */
+  .blog-content em {
+    @apply italic text-accent;
+  }
+
+  /* CTA Buttons */
+  .blog-content .cta-button {
+    @apply inline-flex items-center px-8 py-4 bg-primary;
+    @apply text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl;
+    @apply transform hover:scale-105 transition-all duration-200;
+    @apply border-0 no-underline my-8;
+  }
+
+  /* Special Sections with more spacing */
+  .blog-content .highlight-box {
+    @apply bg-secondary border-l-4 border-accent;
+    @apply p-8 my-12 rounded-r-xl shadow-sm;
+  }
+
+  .blog-content .info-box {
+    @apply bg-secondary border-l-4 border-primary;
+    @apply p-8 my-12 rounded-r-xl shadow-sm;
+  }
+
+  .blog-content .warning-box {
+    @apply bg-secondary border-l-4 border-destructive;
+    @apply p-8 my-12 rounded-r-xl shadow-sm;
+  }
+
+  /* Dividers */
+  .blog-content hr {
+    @apply my-16 border-0 h-px bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+
+  /* Images */
+  .blog-content img {
+    @apply rounded-xl shadow-lg my-12 mx-auto max-w-full h-auto;
+  }
+
+  /* Rating Stars */
+  .blog-content .rating {
+    @apply inline-flex items-center space-x-1 bg-secondary px-3 py-1 rounded-full;
+    @apply border border-border;
+  }
+
+  /* Badges */
+  .blog-content .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+    @apply bg-primary text-primary-foreground border border-primary;
+  }
+
+  .blog-content .badge-success {
+    @apply bg-accent text-accent-foreground border-accent;
+  }
+
+  .blog-content .badge-warning {
+    @apply bg-secondary text-foreground border-border;
+  }
+
+  .blog-content .badge-error {
+    @apply bg-destructive text-destructive-foreground border-destructive;
+  }
+}
