@@ -70,21 +70,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  const blogPostPages: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug.current}`,
+  const validPosts = posts.filter((post) => post.slug?.current && typeof post.slug.current === "string")
+
+  const blogPostPages: MetadataRoute.Sitemap = validPosts.map((post) => ({
+    url: `${baseUrl}/blog/${encodeURIComponent(post.slug.current)}`,
     lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
-    changeFrequency: "monthly",
+    changeFrequency: "monthly" as const,
     priority: 0.8,
   }))
 
-  const uniqueCategories = Array.from(new Set(posts.flatMap((post) => post.categories || [])))
+  const uniqueCategories = Array.from(
+    new Set(validPosts.flatMap((post) => post.categories || []).filter((cat) => cat && typeof cat === "string")),
+  )
 
-  const categoryPages: MetadataRoute.Sitemap = uniqueCategories.map((category) => ({
-    url: `${baseUrl}/blog/category/${category.toLowerCase().replace(/\s+/g, "-")}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.6,
-  }))
+  const categoryPages: MetadataRoute.Sitemap = uniqueCategories.map((category) => {
+    const slug = category
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+    return {
+      url: `${baseUrl}/blog/category/${encodeURIComponent(slug)}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }
+  })
 
   return [...staticPages, ...blogPostPages, ...categoryPages]
 }

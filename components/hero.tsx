@@ -74,48 +74,37 @@ export function Hero() {
           {/* Right: Product Visual */}
           <div className="relative">
             <div className="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl" />
-            <div className="relative bg-secondary rounded-2xl p-6 shadow-2xl border border-border">
-              {/* Form Preview */}
-              <div className="bg-background rounded-xl p-6 shadow-sm border border-border mb-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-destructive" />
-                  <div className="w-3 h-3 rounded-full bg-accent" />
-                  <div className="w-3 h-3 rounded-full bg-primary" />
-                </div>
-                <div className="space-y-4">
-                  <div className="h-8 bg-secondary rounded-lg w-3/4" />
-                  <div className="h-10 bg-secondary rounded-lg" />
-                  <div className="h-10 bg-secondary rounded-lg" />
-                  <div className="flex gap-2">
-                    <div className="h-10 bg-primary rounded-lg flex-1" />
-                  </div>
+            <div className="relative bg-background rounded-2xl p-4 sm:p-6 shadow-2xl border border-border overflow-hidden">
+              {/* Browser Chrome */}
+              <div className="flex items-center gap-2 mb-4 px-2">
+                <div className="w-3 h-3 rounded-full bg-destructive" />
+                <div className="w-3 h-3 rounded-full bg-accent" />
+                <div className="w-3 h-3 rounded-full bg-primary" />
+                <div className="ml-4 flex-1 h-6 bg-secondary/50 rounded-md px-3 flex items-center text-xs text-muted-foreground">
+                  app.leadtella.com/demo
                 </div>
               </div>
 
-              {/* Lead Intelligence Panel */}
-              <div className="bg-background rounded-xl p-4 shadow-sm border border-border">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                    Lead Intelligence
-                  </span>
-                  <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
-                    Qualified
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Intent Score</span>
-                    <span className="font-semibold text-primary">87/100</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Company</span>
-                    <span className="font-semibold text-foreground">TechCorp Inc.</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Budget</span>
-                    <span className="font-semibold text-foreground">$50k-100k</span>
-                  </div>
-                </div>
+              {/* Live Embedded Form */}
+              <div className="relative rounded-xl overflow-hidden bg-background">
+                <iframe
+                  src="https://app.leadtella.com/embed/form/89?primaryColor=%233b82f6&secondaryColor=%2364748b&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%233b82f6&buttonTextColor=%23ffffff&showBranding=true"
+                  width="100%"
+                  height="500"
+                  frameBorder="0"
+                  className="w-full"
+                  title="LeadTella Demo Form"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Optional: "Try it live" indicator */}
+              <div className="mt-3 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                <span>Interactive demo - Try it now!</span>
               </div>
             </div>
           </div>
