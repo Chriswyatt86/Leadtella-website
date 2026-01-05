@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
       description: sanityPost.excerpt,
       type: "article",
       publishedTime: sanityPost.publishedAt,
-      authors: [sanityPost.author.name],
+      authors: sanityPost.author?.name ? [sanityPost.author.name] : [],
       url: `https://www.leadtella.com/blog/${sanityPost.slug.current}`,
     },
     twitter: {
@@ -52,26 +52,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = {
     id: sanityPost._id,
     title: sanityPost.title,
-    slug: sanityPost.slug.current,
+    slug: sanityPost.slug?.current || params.slug,
     excerpt: sanityPost.excerpt || "",
-    coverImage: sanityPost.coverImage?.asset.url || "/blog-concept.png",
+    coverImage: sanityPost.coverImage?.asset?.url || "/blog-concept.png",
     publishedAt: sanityPost.publishedAt,
     author: {
-      id: sanityPost.author._id,
-      name: sanityPost.author.name,
-      slug: sanityPost.author.slug.current,
-      role: sanityPost.author.role,
-      bio: sanityPost.author.bio,
-      avatar: sanityPost.author.avatar?.asset.url,
-      twitter: sanityPost.author.twitter,
-      linkedin: sanityPost.author.linkedin,
-      website: sanityPost.author.website,
+      id: sanityPost.author?._id || "unknown",
+      name: sanityPost.author?.name || "Anonymous",
+      slug: sanityPost.author?.slug?.current || "anonymous",
+      role: sanityPost.author?.role || "Contributor",
+      bio: sanityPost.author?.bio || "",
+      avatar: sanityPost.author?.avatar?.asset?.url,
+      twitter: sanityPost.author?.twitter,
+      linkedin: sanityPost.author?.linkedin,
+      website: sanityPost.author?.website,
     },
     readTime: sanityPost.readTime || "5 min read",
     tags:
       sanityPost.categories?.map((cat) => ({ id: cat, name: cat, slug: cat.toLowerCase().replace(/\s+/g, "-") })) || [],
     featured: sanityPost.featured || false,
-    content: sanityPost.content,
+    content: sanityPost.content || [],
   }
 
   return (
@@ -85,7 +85,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
-  return posts.map((post) => ({
-    slug: post.slug.current,
-  }))
+  return posts
+    .filter((post) => post?.slug?.current)
+    .map((post) => ({
+      slug: post.slug.current,
+    }))
 }
