@@ -6,7 +6,7 @@ export function generateOrganizationSchema() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/favicon.png`,
+    logo: `${SITE_URL}/favicon.ico`,
     description: SITE_DESCRIPTION,
     sameAs: ["https://twitter.com/leadtella", "https://linkedin.com/company/leadtella"],
     contactPoint: {
@@ -24,30 +24,30 @@ export function generateWebSiteSchema() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
-    description: "AI-powered lead generation platform for B2B businesses",
+    description: SITE_DESCRIPTION,
     potentialAction: {
       "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/blog?search={search_term_string}`,
-      },
+      target: `${SITE_URL}/search?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   }
 }
 
-export function generateWebPageSchema(title: string, description: string, url: string) {
+export function generateWebPageSchema(page: {
+  title: string
+  description: string
+  url: string
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: title,
-    description,
-    url,
-    inLanguage: "en-US",
+    name: page.title,
+    description: page.description,
+    url: page.url,
     isPartOf: {
       "@type": "WebSite",
-      url: SITE_URL,
       name: SITE_NAME,
+      url: SITE_URL,
     },
   }
 }
@@ -71,60 +71,36 @@ export function generateSoftwareApplicationSchema() {
     "@type": "SoftwareApplication",
     name: SITE_NAME,
     applicationCategory: "BusinessApplication",
-    operatingSystem: "Web Browser",
+    operatingSystem: "Web",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-      description: "Free plan available with paid upgrades",
     },
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.8",
-      ratingCount: "250",
-      bestRating: "5",
-      worstRating: "1",
+      ratingCount: "127",
     },
-    description: SITE_DESCRIPTION,
   }
 }
 
-export function generateProductSchema(product: {
-  name: string
-  description: string
-  price: string
-  currency: string
-  features: string[]
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: product.description,
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: product.currency,
-      availability: "https://schema.org/InStock",
-      url: `${SITE_URL}/pricing`,
-    },
-    brand: {
-      "@type": "Brand",
-      name: SITE_NAME,
-    },
-  }
-}
+// Alias for compatibility
+export const generateSoftwareSchema = generateSoftwareApplicationSchema
 
 export function generateBlogPostSchema(post: {
   title: string
   description: string
   url: string
-  publishedAt: string
+  image?: string
+  datePublished: string
+  dateModified?: string
   author: {
     name: string
     url?: string
   }
-  image?: string
 }) {
   return {
     "@context": "https://schema.org",
@@ -132,8 +108,9 @@ export function generateBlogPostSchema(post: {
     headline: post.title,
     description: post.description,
     url: post.url,
-    datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    image: post.image || `${SITE_URL}/og-image.png`,
+    datePublished: post.datePublished,
+    dateModified: post.dateModified || post.datePublished,
     author: {
       "@type": "Person",
       name: post.author.name,
@@ -144,10 +121,9 @@ export function generateBlogPostSchema(post: {
       name: SITE_NAME,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/favicon.png`,
+        url: `${SITE_URL}/favicon.ico`,
       },
     },
-    image: post.image || `${SITE_URL}/favicon.png`,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": post.url,
@@ -155,23 +131,42 @@ export function generateBlogPostSchema(post: {
   }
 }
 
-export function generateBlogSchema() {
+// Alias for compatibility
+export const generateArticleSchema = generateBlogPostSchema
+
+export function generateProductSchema(product: {
+  name: string
+  description: string
+  price: string
+  currency: string
+  availability?: string
+}) {
   return {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    name: `${SITE_NAME} Blog`,
-    description: "Latest insights on lead generation, quiz marketing, and conversion optimization",
-    url: `${SITE_URL}/blog`,
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/favicon.png`,
-      },
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: product.currency,
+      availability: product.availability || "https://schema.org/InStock",
+      url: SITE_URL,
     },
   }
 }
 
-export const generateSoftwareSchema = generateSoftwareApplicationSchema
-export const generateArticleSchema = generateBlogPostSchema
+export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  }
+}

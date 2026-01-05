@@ -1,20 +1,21 @@
-"use client"
+import Script from "next/script"
 
 interface SchemaMarkupProps {
-  schema: object | object[]
+  schema: any | any[]
 }
 
 export function SchemaMarkup({ schema }: SchemaMarkupProps) {
-  const schemas = Array.isArray(schema) ? schema : [schema]
+  const schemaArray = Array.isArray(schema) ? schema : [schema]
 
   return (
     <>
-      {schemas.map((s, index) => (
-        <script
+      {schemaArray.map((schemaItem, index) => (
+        <Script
           key={index}
+          id={`schema-${index}`}
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(s),
+            __html: JSON.stringify(schemaItem),
           }}
         />
       ))}
