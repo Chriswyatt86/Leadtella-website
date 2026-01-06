@@ -91,7 +91,7 @@ export function Hero() {
               <div className="relative rounded-xl overflow-hidden bg-background min-h-[500px]">
                 {!iframeError ? (
                   <iframe
-                    src="https://app.leadtella.com/embed/form/89?primaryColor=%233b82f6&secondaryColor=%2364748b&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%233b82f6&buttonTextColor=%23ffffff&showBranding=true"
+                    src="https://app.leadtella.com/embed/form/98?primaryColor=%23059669&secondaryColor=%236b7280&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%23059669&buttonTextColor=%23ffffff&showBranding=true"
                     width="100%"
                     height="500"
                     style={{ border: "none", display: "block" }}
@@ -108,7 +108,7 @@ export function Hero() {
                   <div className="flex flex-col items-center justify-center h-[500px] bg-secondary/20 rounded-xl">
                     <p className="text-muted-foreground mb-4">Unable to load embedded form</p>
                     <a
-                      href="https://app.leadtella.com/embed/form/89?primaryColor=%233b82f6&secondaryColor=%2364748b&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%233b82f6&buttonTextColor=%23ffffff&showBranding=true"
+                      href="https://app.leadtella.com/embed/form/98?primaryColor=%23059669&secondaryColor=%236b7280&backgroundColor=%23ffffff&textColor=%231f2937&buttonColor=%23059669&buttonTextColor=%23ffffff&showBranding=true"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
