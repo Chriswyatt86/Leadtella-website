@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next"
 import { getAllPosts } from "@/lib/sanity"
+import { getAllGlossaryTerms } from "@/lib/sanity-glossary"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.leadtella.com"
 
   const posts = await getAllPosts()
+  const glossaryTerms = await getAllGlossaryTerms()
 
   // Base pages with optimized priorities and change frequencies
   const staticPages: MetadataRoute.Sitemap = [
@@ -25,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/glossary`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/affiliates`,
@@ -96,5 +104,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  return [...staticPages, ...blogPostPages, ...categoryPages]
+  const glossaryPages: MetadataRoute.Sitemap = glossaryTerms
+    .filter((term) => term.slug?.current && typeof term.slug.current === "string")
+    .map((term) => ({
+      url: `${baseUrl}/glossary/${encodeURIComponent(term.slug.current)}`,
+      lastModified: term.publishedAt ? new Date(term.publishedAt) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }))
+
+  return [...staticPages, ...blogPostPages, ...categoryPages, ...glossaryPages]
 }

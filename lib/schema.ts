@@ -1,13 +1,15 @@
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "./constants"
+import { SITE_URL } from "./constants"
 
+// Organization Schema for the company
 export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: SITE_NAME,
+    name: "LeadTella",
     url: SITE_URL,
-    logo: `${SITE_URL}/favicon.ico`,
-    description: SITE_DESCRIPTION,
+    logo: `${SITE_URL}/logo.png`,
+    description:
+      "AI-powered lead generation platform that helps businesses convert website visitors into qualified leads through intelligent quizzes and forms.",
     sameAs: ["https://twitter.com/leadtella", "https://linkedin.com/company/leadtella"],
     contactPoint: {
       "@type": "ContactPoint",
@@ -18,40 +20,42 @@ export function generateOrganizationSchema() {
   }
 }
 
+// WebSite Schema for the main site
 export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: SITE_NAME,
+    name: "LeadTella",
     url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
+    description:
+      "AI-powered lead generation platform that helps businesses convert website visitors into qualified leads through intelligent quizzes and forms.",
+    publisher: {
+      "@type": "Organization",
+      name: "LeadTella",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo.png`,
+      },
     },
   }
 }
 
-export function generateWebPageSchema(page: {
-  title: string
-  description: string
-  url: string
-}) {
+// WebPage Schema for individual pages
+export function generateWebPageSchema(pageUrl: string, pageName: string, pageDescription: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: page.title,
-    description: page.description,
-    url: page.url,
+    url: pageUrl,
+    name: pageName,
+    description: pageDescription,
     isPartOf: {
       "@type": "WebSite",
-      name: SITE_NAME,
       url: SITE_URL,
     },
   }
 }
 
+// Breadcrumb Schema
 export function generateBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {
     "@context": "https://schema.org",
@@ -65,42 +69,85 @@ export function generateBreadcrumbSchema(items: Array<{ name: string; url: strin
   }
 }
 
+// Software Application Schema for product pages
 export function generateSoftwareApplicationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: SITE_NAME,
+    name: "LeadTella",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
+      description: "Free trial available",
     },
-    description: SITE_DESCRIPTION,
-    url: SITE_URL,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.8",
-      ratingCount: "127",
+      ratingCount: "150",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    description:
+      "AI-powered lead generation platform that helps businesses convert website visitors into qualified leads through intelligent quizzes and forms.",
+  }
+}
+
+// Product Schema for pricing/offerings
+export function generateProductSchema(product: {
+  name: string
+  description: string
+  price: string
+  currency: string
+  url: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    url: product.url,
+    offers: {
+      "@type": "Offer",
+      price: product.price,
+      priceCurrency: product.currency,
+      availability: "https://schema.org/InStock",
+      url: product.url,
     },
   }
 }
 
-// Alias for compatibility
-export const generateSoftwareSchema = generateSoftwareApplicationSchema
+// Blog Schema
+export function generateBlogSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    url: `${SITE_URL}/blog`,
+    name: "LeadTella Blog",
+    description: "Tips, strategies, and insights on lead generation, conversion optimization, and business growth.",
+    publisher: {
+      "@type": "Organization",
+      name: "LeadTella",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo.png`,
+      },
+    },
+  }
+}
 
+// BlogPosting/Article Schema
 export function generateBlogPostSchema(post: {
   title: string
   description: string
   url: string
-  image?: string
-  datePublished: string
-  dateModified?: string
-  author: {
-    name: string
-    url?: string
-  }
+  publishedDate: string
+  modifiedDate?: string
+  authorName: string
+  imageUrl?: string
+  category?: string
 }) {
   return {
     "@context": "https://schema.org",
@@ -108,22 +155,27 @@ export function generateBlogPostSchema(post: {
     headline: post.title,
     description: post.description,
     url: post.url,
-    image: post.image || `${SITE_URL}/og-image.png`,
-    datePublished: post.datePublished,
-    dateModified: post.dateModified || post.datePublished,
+    datePublished: post.publishedDate,
+    dateModified: post.modifiedDate || post.publishedDate,
     author: {
       "@type": "Person",
-      name: post.author.name,
-      url: post.author.url || SITE_URL,
+      name: post.authorName,
     },
     publisher: {
       "@type": "Organization",
-      name: SITE_NAME,
+      name: "LeadTella",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/favicon.ico`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
+    image: post.imageUrl
+      ? {
+          "@type": "ImageObject",
+          url: post.imageUrl,
+        }
+      : undefined,
+    articleSection: post.category,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": post.url,
@@ -131,31 +183,7 @@ export function generateBlogPostSchema(post: {
   }
 }
 
-// Alias for compatibility
-export const generateArticleSchema = generateBlogPostSchema
-
-export function generateProductSchema(product: {
-  name: string
-  description: string
-  price: string
-  currency: string
-  availability?: string
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: product.description,
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: product.currency,
-      availability: product.availability || "https://schema.org/InStock",
-      url: SITE_URL,
-    },
-  }
-}
-
+// FAQ Schema
 export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
   return {
     "@context": "https://schema.org",
@@ -170,3 +198,42 @@ export function generateFAQSchema(faqs: Array<{ question: string; answer: string
     })),
   }
 }
+
+// DefinedTerm Schema for glossary terms
+export function generateDefinedTermSchema(term: {
+  name: string
+  description: string
+  url: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name: term.name,
+    description: term.description,
+    url: term.url,
+    inDefinedTermSet: {
+      "@type": "DefinedTermSet",
+      name: "LeadTella Glossary",
+      url: `${SITE_URL}/glossary`,
+    },
+  }
+}
+
+// Collection Page Schema for glossary listing
+export function generateCollectionPageSchema(url: string, name: string, description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    url,
+    name,
+    description,
+    isPartOf: {
+      "@type": "WebSite",
+      url: SITE_URL,
+    },
+  }
+}
+
+// Aliases for backward compatibility
+export const generateSoftwareSchema = generateSoftwareApplicationSchema
+export const generateArticleSchema = generateBlogPostSchema

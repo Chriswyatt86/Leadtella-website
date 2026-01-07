@@ -7,6 +7,8 @@ export const sanityClient = createClient({
   useCdn: false, // Disable CDN to get fresh published data instead of cached results
 })
 
+export const client = sanityClient
+
 export interface SanityAuthor {
   _id: string
   name: string
