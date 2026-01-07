@@ -15,7 +15,7 @@ const nextConfig = {
               "img-src 'self' data: blob: https: http: https://www.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com https://googletagmanager.com https://www.googletagmanager.com",
               "font-src 'self' https://fonts.gstatic.com data:",
               "connect-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://api.stripe.com https://checkout.stripe.com",
-              "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com",
+              "frame-src 'self' https://app.leadtella.com https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self' https://checkout.stripe.com",
